@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bills-sql-models"
 version = "0.0.5"
 description = "Stand-alone SQL models."
-authors = [{name = "Bilbottom"}]
+authors = [{name = "billwallis"}]
 readme = "README.md"
 requires-python = ">=3.11"
 dynamic = ["dependencies"]

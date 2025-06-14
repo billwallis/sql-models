@@ -1,8 +1,8 @@
 <div align="center">
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
-![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-models)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Bilbottom/sql-models/main.svg)](https://results.pre-commit.ci/latest/github/Bilbottom/sql-models/main)
+![GitHub last commit](https://img.shields.io/github/last-commit/billwallis/sql-models)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/billwallis/sql-models/main.svg)](https://results.pre-commit.ci/latest/github/billwallis/sql-models/main)
 
 </div>
 
