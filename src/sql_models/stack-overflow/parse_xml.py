@@ -7,7 +7,9 @@ import pathlib
 from xml.etree import ElementTree
 
 HERE = pathlib.Path(__file__).parent
-XML_PATH = pathlib.Path("D:/Databases/Stack Overflow")  # TODO: Parameterise on this
+XML_PATH = pathlib.Path(
+    "D:/Databases/Stack Overflow"
+)  # TODO: Parameterise on this
 
 
 def parse_xml_to_jsonl(
@@ -19,10 +21,11 @@ def parse_xml_to_jsonl(
     """
 
     print(f"Parsing {xml_file.name}...")
-    document = ElementTree.parse(xml_file)
+    document = ElementTree.parse(xml_file)  # noqa: S314
     with open(jsonl_file, "w+") as f:
-        for child in document.getroot():
-            f.write(json.dumps(child.attrib) + "\n")
+        f.writelines(
+            json.dumps(child.attrib) + "\n" for child in document.getroot()
+        )
 
 
 def main() -> None:

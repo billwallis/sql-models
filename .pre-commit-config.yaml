@@ -1,6 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/pre-commit-config.json
 ---
 ci:
   autoupdate_schedule: quarterly
+  skip: ["identity", "uv-lock", "ty"]
+
+default_install_hook_types: ["pre-commit", "pre-push"]
+default_stages: ["pre-commit"]
 
 repos:
   - repo: meta
@@ -29,10 +34,62 @@ repos:
         name: Check TOML files are valid and parseable
       - id: check-ast
         name: Validate Python
+      - id: detect-private-key
+        name: Check for the existence of private keys
 
-  # Formatting
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
+  - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+    rev: v1.6.1
     hooks:
-      - id: prettier
-        name: Make code pretty
+      - id: check-pre-commit-ci-config
+        name: Validate pre-commit CI config
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.10.4
+    hooks:
+      - id: uv-lock
+        name: Check that the lock file is up-to-date
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.2
+    hooks:
+      - id: ruff-check
+        name: Lint Python code
+        args: ["--fix"]
+      - id: ruff-format
+        name: Format Python code
+
+  # https://github.com/astral-sh/ty?tab=readme-ov-file#getting-started
+  - repo: local
+    hooks:
+      - id: ty
+        name: Run type checks
+        entry: uvx ty check
+        language: system
+        pass_filenames: true
+        always_run: false
+        types: ["python"]
+
+  - repo: https://github.com/billwallis/bills-hooks
+    rev: v0.0.8
+    hooks:
+      - id: tidy-gitkeep
+        name: Remove redundant .gitkeep files
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.36.2
+    hooks:
+      - id: check-github-workflows
+      - id: check-compose-spec
+
+  - repo: local
+    hooks:
+      - id: check-pyproject-schema
+        name: Validate pyproject.toml schema
+        entry: check-jsonschema
+        pass_filenames: true
+        language: python
+        additional_dependencies: ["check-jsonschema==0.35.0"]
+        files: pyproject.toml
+        args: ["--schemafile", "https://json.schemastore.org/pyproject.json"]
+        # This calls a remote URL, so run on pre-push to avoid slowing down commits
+        stages: ["pre-push"]
