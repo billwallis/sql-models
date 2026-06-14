@@ -1,29 +1,28 @@
 # yaml-language-server: $schema=https://json.schemastore.org/pyproject.json
-
 [build-system]
-requires = ["uv_build>=0.8.2,<1.0.0"]
+requires = ["uv_build"]
 build-backend = "uv_build"
 
 [project]
-name = "bills-sql-models"
+name = "sql-models"
 version = "0.0.5"
 description = "Stand-alone SQL models."
 authors = [{name = "billwallis"}]
 readme = "README.md"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 dependencies = [
-    "duckdb>=1.4.4",
+    "duckdb>=1.5.0",
 ]
 
 [dependency-groups]
 dev = [
-    "poethepoet>=0.41.0",
-    "pre-commit>=4.5.1",
+    "poethepoet>=0.46.0",
+    "pre-commit>=4.6.0",
 ]
 
 
 [tool.uv]
-required-version = ">=0.8,<1.0"
 default-groups = "all"
 package = false
 
@@ -33,7 +32,7 @@ namespace = true
 
 [tool.poe]
 verbosity = -1
-#envfile = ".env"
+envfile.optional = ".env"
 
 [tool.poe.tasks]
 install.shell = """
